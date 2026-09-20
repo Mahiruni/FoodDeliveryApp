@@ -1,9 +1,14 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
-  // Backend work is intentionally deferred; keep the UI deployment unblocked.
+  // UI-first deployment: backend work is intentionally deferred.
   typescript: {
     ignoreBuildErrors: true,
+  },
+  productionBrowserSourceMaps: false,
+  experimental: {
+    webpackMemoryOptimizations: true,
+    serverSourceMaps: false,
   },
 }
 
