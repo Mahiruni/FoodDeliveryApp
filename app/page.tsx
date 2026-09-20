@@ -22,6 +22,14 @@ const categories = [
   { label: 'Groceries', icon: ShoppingCart }, { label: 'Market', icon: ShoppingBag }
 ]
 
+const navItems = [
+  { label: 'Home', icon: Home },
+  { label: 'Explore', icon: Compass },
+  { label: 'Cart', icon: ShoppingCart },
+  { label: 'Wallet', icon: WalletCards },
+  { label: 'Profile', icon: UserRound },
+] as const
+
 export default function Home() {
   const [active, setActive] = useState('Home')
   const [cart, setCart] = useState<Record<string, number>>({})
@@ -124,7 +132,7 @@ export default function Home() {
       {cartCount > 0 && active !== 'Cart' && <button className="cartBar" onClick={() => setActive('Cart')}><div><ShoppingCart size={18}/><b>{cartCount} item{cartCount > 1 ? 's' : ''}</b></div><span>ETB {total.toLocaleString()}</span><ChevronRight size={18}/></button>}
 
       <nav className="bottomNav">
-        {[['Home', Home], ['Explore', Compass], ['Cart', ShoppingCart], ['Wallet', WalletCards], ['Profile', UserRound]].map(([label, Icon]) => <button key={label as string} className={active === label ? 'navItem active' : 'navItem'} onClick={() => go(label as string)}><Icon size={20}/><span>{label as string}{label === 'Cart' && cartCount > 0 ? ' · ' + cartCount : ''}</span></button>)}
+        {navItems.map(({label, icon: Icon}) => <button key={label} className={active === label ? 'navItem active' : 'navItem'} onClick={() => go(label)}><Icon size={20}/><span>{label}{label === 'Cart' && cartCount > 0 ? ' · ' + cartCount : ''}</span></button>)}
       </nav>
 
       {walletOpen && <div className="modalBackdrop" onClick={() => setWalletOpen(false)}><aside className="walletSheet" onClick={e => e.stopPropagation()}><div className="sheetHead"><div><span className="eyebrow">S PAY</span><h2>Your wallet</h2></div><button onClick={() => setWalletOpen(false)}><X size={19}/></button></div><div className="balance"><span>AVAILABLE BALANCE</span><strong>ETB 2,450.00</strong></div><button className="topup" onClick={() => setTopupOpen(true)}><Plus size={18}/> Top up wallet</button><div className="transaction"><div className="txIcon"><Utensils size={16}/></div><div><strong>Food order</strong><small>Today · S Food</small></div><b>- ETB 280</b></div><div className="transaction"><div className="txIcon"><CreditCard size={16}/></div><div><strong>Wallet top-up</strong><small>Yesterday · Card</small></div><b className="positive">+ ETB 1,000</b></div></aside></div>}
