@@ -1,9 +1,14 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  // Keep the UI deployment deterministic while backend work is deferred.
   typescript: {
-    // UI-first phase: keep Vercel deployments unblocked while backend work is deferred.
     ignoreBuildErrors: true,
+  },
+  experimental: {
+    turbo: {
+      resolveAlias: {},
+    },
   },
 }
 
